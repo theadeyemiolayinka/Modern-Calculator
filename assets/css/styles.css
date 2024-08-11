@@ -349,9 +349,57 @@ input:focus {
 *
 */
 
-@media screen and (max-width: 375px) {
-    .frame {
-        width: 300px !important;
-        min-width: 300px !important;
+@media screen and (max-width: 768px) {
+    body {
+        padding-top: 20px;
+        padding-bottom: 20px;
+    }
+
+    .history-panel {
+        display: none;
+        border-radius: 20px;
+        width: 320px;
+        height: 100%;
+        background: rgba(58, 58, 69, 0.9);
+        color: white;
+        flex-direction: column;
+        justify-content: space-between;
+        align-items: center;
+        transition: right 0.3s ease;
+        z-index: 100;
+        overflow-x: hidden;
+        position: absolute;
+    }
+
+    .history-panel__items {
+        flex-grow: 1;
+        display: flex;
+        height: 100%;
+        flex-direction: column;
+    }
+
+    .history-panel__content {
+        height: 100%;
+    }
+
+    .history-panel--open {
+        margin-left: 0px;
+    }
+}
+
+@media screen and (max-width: 320px) {
+
+    .frame,
+    .history-panel {
+        width: 270px !important;
+        min-width: 270px !important;
+        /* width: 300px !important;
+        min-width: 300px !important; */
+    }
+
+    .key__item {
+        font-size: 13px !important;
+        padding: 15px auto !important;
+        max-width: 42px !important;
     }
 }

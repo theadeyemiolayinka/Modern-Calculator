@@ -41,7 +41,6 @@ function getIntPrompt(message) {
 
 document.addEventListener("keydown", function (event) {
   const key = event.key;
-  console.log(key);
   const keyMappings = {
     0: () => handleKeyPress("0"),
     1: () => handleKeyPress("1"),

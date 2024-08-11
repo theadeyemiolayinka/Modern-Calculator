@@ -151,6 +151,9 @@ keys.forEach((key) => {
       clearResult();
     } else {
       try {
+        if(screenDisplay.value == "NaN" || screenDisplay.value == "Infinity" || screenDisplay.value == "Error") {
+          clearScreen();
+        }
         calculateResult();
         switch (value) {
           case "PI":
