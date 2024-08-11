@@ -251,7 +251,6 @@ function addHistory(value) {
   var history = JSON.parse(localStorage.getItem(HISTORY_KEY)) || [];
   history.unshift(value);
   history = history.slice(0, 10);
-  console.log(history);
   localStorage.setItem(HISTORY_KEY, JSON.stringify(history, null, 2));
   renderHistory();
 }
