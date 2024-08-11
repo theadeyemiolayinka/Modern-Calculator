@@ -6,6 +6,30 @@ function factorial(n) {
   return ans;
 }
 
+function log(n, base = 10) {
+  return Math.log(n) / Math.log(base);
+}
+
+function ln(n) {
+  return Math.log(n);
+}
+
+function sin(n){
+  return Math.sin(n);
+}
+
+function cos(n){
+  return Math.cos(n);
+}
+
+function tan(n){
+  return Math.tan(n);
+}
+
+function sqrt(n){
+  return Math.sqrt(n);
+}
+
 function getIntPrompt(message){
   try {
     let num = parseInt(prompt(message));

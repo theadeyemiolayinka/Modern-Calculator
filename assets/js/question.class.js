@@ -1,5 +1,6 @@
 class Question {
-  constructor(question, answer) {
+  constructor(question, answer, index = 0) {
+    this.index = index;
     this.question = question;
     this.answer = answer;
   }
@@ -8,8 +9,8 @@ class Question {
     return JSON.stringify(this);
   }
 
-  static fromJson(json) {
+  static fromJson(json, index) {
     const obj = JSON.parse(json);
-    return new Question(obj.question, obj.answer);
+    return new Question(obj.question, obj.answer, index);
   }
 }

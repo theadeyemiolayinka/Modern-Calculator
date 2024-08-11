@@ -10,123 +10,160 @@
   </head>
 
   <body>
-    <div class="frame" id="frame">
-      <div class="frame__title">
-        <a href="https://theadeyemiolayinka.com">
-          <img
-            src="assets/images/theadeyemiolayinka.png"
-            alt="Logo"
-            srcset=""
-            width="auto"
-            height="30px"
-        /></a>
-        <p>Modern Calculator</p>
-      </div>
-      <div class="display">
-        <div class="display_screen">
-          <input
-            type="text"
-            name="display_screen"
-            id="display_screen"
-            readonly="true"
-            value="0"
-          />
+    <div class="app">
+
+      <!-- Calculator Frame -->
+      <div class="frame" id="frame">
+        <div class="frame__title">
+          <a href="https://theadeyemiolayinka.com">
+            <img
+              src="assets/images/theadeyemiolayinka.png"
+              alt="Logo"
+              srcset=""
+              width="auto"
+              height="30px"
+          /></a>
+          <p>Modern Calculator</p>
         </div>
-        <div class="display_result">
-          <input
-            type="text"
-            name="display_result"
-            id="display_result"
-            readonly="true"
-          />
-        </div>
-      </div>
-      <div class="keys">
-        <div class="keys__special">
-          <div class="keys__body__left__top__row row--special">
-            <button class="key__item key--special" data-key="pow">
-              x<sup>y</sup>
-            </button>
-            <button class="key__item key--special" data-key="log">log</button>
-            <button class="key__item key--special" data-key="ln">ln</button>
-            <button class="key__item key--special" data-key="(">(</button>
-            <button class="key__item key--special" data-key=")">)</button>
+        <div class="display">
+          <div class="display_screen">
+            <input
+              type="text"
+              name="display_screen"
+              id="display_screen"
+              readonly="true"
+              value="0"
+            />
           </div>
-          <div class="keys__body__left__top__row">
-            <button class="key__item key--special" data-key="root">
-              <i class="fa-solid fa-square-root"></i>
-            </button>
-            <button class="key__item" data-key="AC">AC</button>
-            <button class="key__item" data-key="Del">
-              <i class="fa-solid fa-delete-left"></i>
-            </button>
-            <button class="key__item" data-key="%">
-              <i class="fa-regular fa-percent"></i>
-            </button>
-            <button class="key__item key--operator" data-key="/">
-              <i class="fa-solid fa-divide"></i>
-            </button>
+          <div class="display_result">
+            <input
+              type="text"
+              name="display_result"
+              id="display_result"
+              readonly="true"
+            />
           </div>
         </div>
-        <div class="keys__body">
-          <div class="keys__body__left">
-            <div class="keys__body__left__top">
-              <div class="keys__body__left__top__row">
-                <button class="key__item key--special" data-key="fact">
-                  x!
-                </button>
-                <button class="key__item" data-key="7">7</button>
-                <button class="key__item" data-key="8">8</button>
-                <button class="key__item" data-key="9">9</button>
-                <button class="key__item key--operator" data-key="*">
-                  <i class="fa-solid fa-xmark"></i>
-                </button>
-              </div>
-              <div class="keys__body__left__top__row">
-                <button class="key__item key--special" data-key="Inv">
-                  inv
-                </button>
-                <button class="key__item" data-key="4">4</button>
-                <button class="key__item" data-key="5">5</button>
-                <button class="key__item" data-key="6">6</button>
-                <button class="key__item key--operator" data-key="-">
-                  <i class="fa-solid fa-minus"></i>
-                </button>
-              </div>
-              <div class="keys__body__left__top__row">
-                <button class="key__item key--special" data-key="PI">
-                  <i class="fa-solid fa-pi"></i>
-                </button>
-                <button class="key__item" data-key="1">1</button>
-                <button class="key__item" data-key="2">2</button>
-                <button class="key__item" data-key="3">3</button>
-                <button class="key__item key--operator" data-key="+">
-                  <i class="fa-solid fa-plus"></i>
-                </button>
-              </div>
-              <div class="keys__body__left__top__row">
-                <button class="key__item key--equal" data-key="Func">
-                  <i class="fa-solid fa-function"></i>
-                </button>
-                <button class="key__item" data-key="0">0</button>
-                <button
-                  class="key__item key--operator key--special"
-                  data-key="e"
-                >
-                  e
-                </button>
-                <button class="key__item key--operator" data-key=".">.</button>
-                <button class="key__item key--operator" data-key="=">
-                  <i class="fa-solid fa-equals"></i>
-                </button>
+        <div class="keys">
+          <div class="keys__special">
+            <div class="keys__body__left__top__row row--special">
+              <button class="key__item key--special" data-key="history">
+                <i class="fa-solid fa-history"></i>
+              </button>
+              <button
+                id="polar_unit"
+                class="key__item key--special"
+                data-key="pol"
+              >
+                deg
+              </button>
+              <button class="key__item key--special" data-key="sin">sin</button>
+              <button class="key__item key--special" data-key="cos">cos</button>
+              <button class="key__item key--special" data-key="tan">tan</button>
+            </div>
+            <div class="keys__body__left__top__row row--special">
+              <button class="key__item key--special" data-key="pow">
+                x<sup>y</sup>
+              </button>
+              <button class="key__item key--special" data-key="log">log</button>
+              <button class="key__item key--special" data-key="ln">ln</button>
+              <button class="key__item key--special" data-key="(">(</button>
+              <button class="key__item key--special" data-key=")">)</button>
+            </div>
+            <div class="keys__body__left__top__row">
+              <button class="key__item key--special" data-key="root">
+                <i class="fa-solid fa-square-root"></i>
+              </button>
+              <button class="key__item" data-key="AC">AC</button>
+              <button class="key__item" data-key="Del">
+                <i class="fa-solid fa-delete-left"></i>
+              </button>
+              <button class="key__item" data-key="%">
+                <i class="fa-regular fa-percent"></i>
+              </button>
+              <button class="key__item key--operator" data-key="/">
+                <i class="fa-solid fa-divide"></i>
+              </button>
+            </div>
+          </div>
+          <div class="keys__body">
+            <div class="keys__body__left">
+              <div class="keys__body__left__top">
+                <div class="keys__body__left__top__row">
+                  <button class="key__item key--special" data-key="fact">
+                    x!
+                  </button>
+                  <button class="key__item" data-key="7">7</button>
+                  <button class="key__item" data-key="8">8</button>
+                  <button class="key__item" data-key="9">9</button>
+                  <button class="key__item key--operator" data-key="*">
+                    <i class="fa-solid fa-xmark"></i>
+                  </button>
+                </div>
+                <div class="keys__body__left__top__row">
+                  <button class="key__item key--special" data-key="Inv">
+                    inv
+                  </button>
+                  <button class="key__item" data-key="4">4</button>
+                  <button class="key__item" data-key="5">5</button>
+                  <button class="key__item" data-key="6">6</button>
+                  <button class="key__item key--operator" data-key="-">
+                    <i class="fa-solid fa-minus"></i>
+                  </button>
+                </div>
+                <div class="keys__body__left__top__row">
+                  <button class="key__item key--special" data-key="PI">
+                    <i class="fa-solid fa-pi"></i>
+                  </button>
+                  <button class="key__item" data-key="1">1</button>
+                  <button class="key__item" data-key="2">2</button>
+                  <button class="key__item" data-key="3">3</button>
+                  <button class="key__item key--operator" data-key="+">
+                    <i class="fa-solid fa-plus"></i>
+                  </button>
+                </div>
+                <div class="keys__body__left__top__row">
+                  <button class="key__item key--equal" data-key="Func">
+                    <i class="fa-solid fa-function"></i>
+                  </button>
+                  <button class="key__item" data-key="0">0</button>
+                  <button
+                    class="key__item key--operator key--special"
+                    data-key="e"
+                  >
+                    e
+                  </button>
+                  <button class="key__item key--operator" data-key=".">
+                    .
+                  </button>
+                  <button class="key__item key--operator" data-key="=">
+                    <i class="fa-solid fa-equals"></i>
+                  </button>
+                </div>
               </div>
             </div>
           </div>
         </div>
-        <script src="assets/js/question.class.js"></script>
-        <script src="assets/js/functions.js"></script>
-        <script src="assets/js/main.js"></script>
+      </div>
+
+      <!-- History Panel -->
+      <div class="history-panel" id="historyPanel">
+        <div class="history-panel__content">
+          <button type="button" class="history-panel__close" id="closeHistory">
+            <i class="fa-solid fa-close"></i>
+          </button>
+          <div class="history-panel__items" id="historyItems"></div>
+          <button type="button" class="history-panel__clear" id="clearHistory">
+            Clear
+          </button>
+        </div>
       </div>
     </div>
+
+    <script src="assets/js/jquery.min.js"></script>
+    <script src="assets/js/jquery-ui.min.js"></script>
+    <script src="assets/js/question.class.js"></script>
+    <script src="assets/js/functions.js"></script>
+    <script src="assets/js/main.js"></script>
   </body>
 </html>

@@ -8,10 +8,18 @@ const HISTORY_KEY = "history";
 const frame = document.getElementById("frame");
 const screenDisplay = document.getElementById("display_screen");
 const resultDisplay = document.getElementById("display_result");
+const polarUnit = document.getElementById("polar_unit");
+const historyPanel = $("#historyPanel");
+const closeHistoryBtn = document.getElementById("closeHistory");
+const clearHistoryBtn = document.getElementById("clearHistory");
+const historyItemsContainer = document.getElementById("historyItems");
 
 const keys = document.querySelectorAll(".key__item");
 
 var operator_lock = false;
+var equal_lock = false;
+var polar_unit = "deg";
+var historyStore = [];
 
 /**
  * Functions
@@ -27,7 +35,7 @@ function updateScreen(value, prepend = true) {
 
 function updateResult(value, prepend = true) {
   prepend
-    ? resultDisplay.value == null
+    ? polar_unit.value == null
       ? resultDisplay.setAttribute("value", value)
       : resultDisplay.setAttribute("value", resultDisplay.value + value)
     : resultDisplay.setAttribute("value", value);
@@ -68,17 +76,7 @@ function calculateResult() {
   }
 }
 
-function addHistory(value) {
-  const history = JSON.parse(localStorage.getItem(HISTORY_KEY)) || [];
-  history.push(value);
-  localStorage.setItem(HISTORY_KEY, JSON.stringify(history));
-}
-
-function clearHistory() {
-  localStorage.removeItem(HISTORY_KEY);
-}
-
-function addNumber(value) {
+function addNumber(value, prepend = true) {
   if (screenDisplay.value === "0") {
     operator_lock = false;
     screenDisplay.setAttribute("value", "");
@@ -86,7 +84,7 @@ function addNumber(value) {
     calculateResult();
   } else {
     operator_lock = false;
-    updateScreen(value);
+    updateScreen(value, prepend);
     calculateResult();
   }
 }
@@ -113,6 +111,15 @@ function toggleFunctionsPanel() {
   frame.classList.toggle("frame--functions");
 }
 
+function togglePolarUnit() {
+  if (polar_unit === "deg") {
+    polar_unit = "rad";
+  } else {
+    polar_unit = "deg";
+  }
+  polarUnit.textContent = polar_unit;
+}
+
 keys.forEach((key) => {
   key.addEventListener("click", (e) => {
     target = e.target;
@@ -134,12 +141,17 @@ keys.forEach((key) => {
       if (resultDisplay.value === "") {
         return;
       }
+      if (resultDisplay.value === "Error") {
+        return;
+      }
       let question = new Question(screenDisplay.value, resultDisplay.value);
-      addHistory(question.toJson());
+      addHistory(question);
       updateScreen(resultDisplay.value, false);
+      equal_lock = true;
       clearResult();
     } else {
       try {
+        calculateResult();
         switch (value) {
           case "PI":
             updateScreen(Math.PI, /[\+\-\*\/]$/g.test(screenDisplay.value));
@@ -171,6 +183,41 @@ keys.forEach((key) => {
             calculateResult();
             break;
 
+          case "sin":
+            num = parseInt(resultDisplay.value);
+            if (polar_unit === "deg") {
+              num = num * (Math.PI / 180);
+            }
+            updateScreen(Math.sin(num), false);
+            calculateResult();
+            break;
+
+          case "cos":
+            num = parseInt(resultDisplay.value);
+            if (polar_unit === "deg") {
+              num = num * (Math.PI / 180);
+            }
+            updateScreen(Math.cos(num), false);
+            calculateResult();
+            break;
+
+          case "tan":
+            num = parseInt(resultDisplay.value);
+            if (polar_unit === "deg") {
+              num = num * (Math.PI / 180);
+            }
+            updateScreen(Math.tan(num), false);
+            calculateResult();
+            break;
+
+          case "pol":
+            togglePolarUnit();
+            break;
+
+          case "history":
+            toggleHistoryPanel();
+            break;
+
           case "pow":
             let power = getIntPrompt("Enter the power");
             updateScreen(Math.pow(resultDisplay.value, power), false);
@@ -181,7 +228,10 @@ keys.forEach((key) => {
             if (target.classList.contains("key--operator")) {
               addOperator(value);
             } else {
-              addNumber(value);
+              addNumber(value, !equal_lock);
+            }
+            if (equal_lock) {
+              equal_lock = false;
             }
             break;
         }
@@ -191,3 +241,83 @@ keys.forEach((key) => {
     }
   });
 });
+
+/**
+ * History Panel
+ *
+ */
+
+function addHistory(value) {
+  var history = JSON.parse(localStorage.getItem(HISTORY_KEY)) || [];
+  history.unshift(value);
+  history = history.slice(0, 10);
+  console.log(history);
+  localStorage.setItem(HISTORY_KEY, JSON.stringify(history, null, 2));
+  renderHistory();
+}
+
+function removeHistory(index) {
+  var history = JSON.parse(localStorage.getItem(HISTORY_KEY)) || [];
+  history.splice(index, 1);
+  localStorage.setItem(HISTORY_KEY, JSON.stringify(history, null, 2));
+  renderHistory();
+}
+
+function clearHistory() {
+  localStorage.removeItem(HISTORY_KEY);
+  renderHistory();
+}
+
+function setState(index) {
+  try {
+    question = historyStore[index];
+    screenDisplay.setAttribute("value", question.question);
+    resultDisplay.setAttribute("value", question.answer);
+  } catch (error) {
+    // Do nothing
+    alert("Invalid question");
+  }
+}
+
+function renderHistory() {
+  const history = JSON.parse(localStorage.getItem(HISTORY_KEY)) || [];
+  // questions = history.map((item, index) => Question.fromJson(item, index));
+  questions = history.map(
+    (item, index) => new Question(item.question, item.answer, index)
+  );
+  localStorage.setItem(HISTORY_KEY, JSON.stringify(questions, null, 2));
+  historyStore = questions;
+  if (questions.length === 0) {
+    historyItemsContainer.innerHTML =
+      "<div class='history-item-ctn'><center style='width: 100%; text-align: center;'>No history</center></div>";
+    return;
+  }
+  historyItemsContainer.innerHTML = questions
+    .map(
+      (question) =>
+        `<div class="history-item-ctn">
+          <div class="history-item" onclick="setState(${question.index})">
+            <span class="history-item__question">${question.question}</span>
+            <span class="history-item__answer">${question.answer}</span>
+          </div>
+          <div class="history-item__remove" onclick="removeHistory(${question.index})">
+            <i class="fas fa-trash"></i>
+          </div>
+        </div>`
+    )
+    .join("");
+}
+
+function toggleHistoryPanel() {
+  historyPanel.toggle("slide", { direction: "left" }, 300);
+  if (historyPanel.is(":visible")) {
+    historyPanel.addClass("history-panel--open");
+  } else {
+    historyPanel.removeClass("history-panel--open");
+  }
+  renderHistory();
+}
+
+// Event Listeners
+closeHistoryBtn.addEventListener("click", toggleHistoryPanel);
+clearHistoryBtn.addEventListener("click", clearHistory);
