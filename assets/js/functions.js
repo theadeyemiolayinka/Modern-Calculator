@@ -66,6 +66,7 @@ document.addEventListener("keydown", function (event) {
     "(": () => handleKeyPress("("),
     ")": () => handleKeyPress(")"),
     "!": () => handleKeyPress("fact"),
+    "e": () => handleKeyPress("e"),
     "Backspace": () => handleKeyPress("Del"),
     "Delete": () => handleKeyPress("AC"),
   };
